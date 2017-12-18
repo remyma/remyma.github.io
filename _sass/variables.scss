@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+$purple_1:      #79589F;
+$grey-color:    #828282 !default;
+$grey_1:        #9B9FA2;
+$grey_2:        #f5f5f5;
+$yellow:        #FF9D38;
+
+$base-font-family:  'Montserrat', sans-serif;
+$title-font-family: 'Roboto', serif;
+
+$base-font-size:   16px !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+// $grey-color-light: lighten($grey-color, 40%) !default;
+// $grey-color-dark:  darken($grey-color, 25%) !default;
+
+$content-width:    680px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        800px !default;

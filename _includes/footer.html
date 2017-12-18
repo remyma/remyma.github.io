@@ -1,0 +1,42 @@
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">        
+            <div class="col-12">
+                <ul class="list-inline social-buttons">
+                    <li class="list-inline-item">
+                        <a href="{{ "/feed.xml" | relative_url }}">
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </li>
+                    {% if site.github_username %}
+                    <li class="list-inline-item">
+                        <a href="https://github.com/{{ site.github_username }}">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.twitter_username %}
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/{{ site.twitter_username }}">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.linkedin_username %}
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/{{ linkedin_username }}">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li class="list-inline-item">
+                        <a href="https://github.com/{{ site.github_username }}">
+                            <i class="fa fa-paper-plane-o"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

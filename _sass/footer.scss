@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@import "variables";
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 60px;
+    background-color: $grey_2;
+
+    ul.social-buttons {
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
