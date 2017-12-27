@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+@import "variables";
+
+article.post-summary {
+    padding-bottom: 1.5em;
+    margin: 1.5em auto;
+    border-bottom: solid 1px #EAE6F2;
+    max-width: $content-width;
+  
+    .post-meta {
+      color: #96A3B6;
+      font-weight: bold;
+      margin-bottom: 20px;
+      
+      time {
+        font-family: $title-font-family;
+        font-size: $small-font-size;
+        text-transform: uppercase;
+  
+        &::after {
+          display: inline-block;
+          vertical-align: middle;
+          margin-left: 10px;
+          content: '';
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: #CFD7E6;
+        }
+      }
+      
+      .badge-secondary {
+        background-color: $purple_1;
+  
+        &:hover {
+          background-color: #fff;
+          border: 1px solid $purple_1;
+          color: $purple_1;
+        }
+      }
+    }
+}
+  
+article.post-detail {
+    header {
+        text-align: center;
+
+        p {
+        text-align: center;
+        }
+    }
+}
