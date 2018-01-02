@@ -1,7 +1,7 @@
 title: Matthieu Rémy
 email: remy.matthieu@gmail.com
 description: >-
-  Tech blog about service architecture, devops, and opensource.
+  Adventures in open-source software.
 baseurl: ""
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: remyMatthieu
@@ -20,3 +20,5 @@ markdown: kramdown
 exclude:
   - Gemfile
   - Gemfile.lock
+
+livereload: true
