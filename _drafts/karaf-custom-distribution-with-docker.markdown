@@ -331,6 +331,7 @@ This article has been inspired in part by the following projects or articles  :
 
 * <https://www.theguild.nl/dockerizing-a-custom-karaf-distribution-in-5-minutes/>
 * <https://github.com/ANierbeck/Karaf-Vertx>
+* <http://cmoulliard.github.io/camel-rest-dsl-in-action>
 
 
 [docker-multistage]: https://docs.docker.com/engine/userguide/eng-image/multistage-build/#before-multi-stage-builds
