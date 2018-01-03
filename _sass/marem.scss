@@ -6,14 +6,6 @@
 @import "article";
 @import "syntax";
 
-// Use media queries like this:
-// @include media-query($on-palm) {
-//   .wrapper {
-//     padding-right: $spacing-unit / 2;
-//     padding-left: $spacing-unit / 2;
-//   }
-// }
-
 h1, h2, h3 {
   font-family: $title-font-family;
   color: $purple_1;
@@ -21,6 +13,11 @@ h1, h2, h3 {
 
 h2 a {
   color: $purple_1;
+
+  &:hover {
+    color: $yellow;
+    text-decoration: none;
+  }
 }
 
 h3 {
@@ -33,12 +30,26 @@ body {
 
 body main {
   margin-top: 20px;
+  margin-bottom: 60px;
 }
 
-p {
+p, ol, ul {
   color: $grey-color;
   line-height: 26px;
   text-align: justify;
+
+  a {
+    color: $purple_1;
+    text-decoration: underline;
+
+    &:hover {
+      color: $yellow;
+    }
+  }
+}
+
+ul#markdown-toc a {
+  text-decoration: none;
 }
 
 .container {

@@ -5,14 +5,14 @@
 
       <div class="container">
         <div class="row justify-content-between no-gutters" style="width: 100%">
-            <div class="col-auto">
+            <div class="col-7">
               <a class="navbar-brand" href="{{ "/" | relative_url }}">
                 {{ site.title | escape }}
                 <span>{{ site.description | escape }}</span>
               </a>
             </div>            
             
-            <div class="col-auto">
+            <div class="col-5">
               <ul class="list-inline social-buttons">
                 {% if site.github_username %}
                 <li class="list-inline-item">
@@ -30,7 +30,7 @@
                 {% endif %}
                 {% if site.linkedin_username %}
                 <li class="list-inline-item">
-                  <a href="https://www.linkedin.com/in/{{ linkedin_username }}">
+                  <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}">
                     <i class="fa fa-linkedin"></i>
                   </a>
                 </li>

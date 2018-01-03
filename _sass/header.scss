@@ -13,6 +13,7 @@
         .navbar-brand {    
             font-family: 'Source Code Pro', monospace;
             color: #383E40;
+            white-space: normal;
         
             a {
                 text-decoration: none;
@@ -20,12 +21,14 @@
         
             span {
                 font-size: $small-font-size;
-                display: block
+                display: block;
             }
         }
 
         ul.social-buttons {
             text-align: right;
+            padding-top: .3125rem;
+            padding-bottom: .3125rem;
 
             li a {
                 border-radius: 100%;
