@@ -5,9 +5,7 @@ date:   2018-01-03 12:05:11 +0100
 categories: karaf docker
 ---
 
-Karaf is a powerful osgi runtime environment which you can use to run your java apps : web applications, api, integration services...
-
-In this post I'll explain how you can use docker to facilitate your developments and deployments with Karaf.
+In this post I'll explain how you can use docker to facilitate your developments and deployments when working with [apache Karaf][karaf].
 
 To help you run the examples in this article, I've created this [github repository][github-karaf-sandbox]{:target="_blank"}. It consists of a Maven multimodule project :
 * karaf-sandbox : parent module. Also contains docker definitions
@@ -23,6 +21,7 @@ This post walks through the following sections :
 
 By karaf provisioning, we means : how to deploy and run your custom code in karaf ?
 
+Karaf is a powerful osgi runtime environment which you can use to run your java apps : web applications, api, integration services...
 There are several ways to deploy your code in karaf. It is described [here in the official documentation][karaf-provisioning]{:target="_blank"}.
 
 To sum up, the recommanded way to provision a karaf server is to package your application code as osgi features, then to install these features using karaf shell commands.
@@ -335,6 +334,7 @@ This article has been inspired in part by the following projects or articles  :
 
 
 [docker-multistage]: https://docs.docker.com/engine/userguide/eng-image/multistage-build/#before-multi-stage-builds
+[karaf]: https://karaf.apache.org/
 [karaf-download]: http://karaf.apache.org/download.html
 [karaf-provisioning]: https://karaf.apache.org/manual/latest/provisioning
 [karaf-custom-distribution]:https://github.com/apache/karaf/blob/master/manual/src/main/asciidoc/developer-guide/custom-distribution.adoc
