@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Dockerize your own karaf distribution"
-date:   2017-12-12 12:05:11 +0100
+date:   2018-01-03 12:05:11 +0100
 categories: karaf docker
 ---
 
