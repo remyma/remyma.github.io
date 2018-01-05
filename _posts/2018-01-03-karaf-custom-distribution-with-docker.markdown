@@ -149,7 +149,7 @@ In the generated `pom.xml` you'll find the following insteresting parts :
 Then, if you launch a maven install for this project, this will package a karaf server in your `target` directory. You'll find here :
 * `assembly` directory : your karaf server
 * `tar.gz` : your karaf server packaged as tar
-* `zip` : your karaf server packae as zip
+* `zip` : your karaf server packaged as zip
 
 You will be able to start your karaf server by launching `bin/karaf` command directly from the `target/assembly` directory (provided that you have a valid installation whith `JAVA_HOME` env variable parametred).
 
