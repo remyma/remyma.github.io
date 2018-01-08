@@ -69,8 +69,8 @@ Prerequisites :
 
 
 You can generate your own karaf distribution by using the maven archetype : `karaf-assembly-archetype`.
-For the purpose of this article, we will init a `karaf-sandbox-ditribution` project. 
-The `karaf-sandbox-ditribution` project will consists of a karaf standard installation packaged with [hawtio web console][hawtio]{:target="_blank"}.
+For the purpose of this article, we will init a `karaf-sandbox-distribution` project. 
+The `karaf-sandbox-ditsribution` project will consists of a karaf standard installation packaged with [hawtio web console][hawtio]{:target="_blank"}.
 
 ### Init your custom distribution
 
@@ -82,12 +82,12 @@ mvn archetype:generate \
   -DarchetypeArtifactId=karaf-assembly-archetype \
   -DarchetypeVersion=4.1.4 \
   -DgroupId=marem.karaf.sandbox \
-  -DartifactId=karaf-sandbox-ditribution \
+  -DartifactId=karaf-sandbox-distribution \
   -Dversion=1.0.0 \
   -Dpackage=marem.karaf.sandbox
 {% endhighlight %}
 
-This command will generate a directory `karaf-sandbox-ditribution` with a well formatted `pom.xml` in it.
+This command will generate a directory `karaf-sandbox-distribution` with a well formatted `pom.xml` in it.
 
 In the generated `pom.xml` you'll find the following insteresting parts :
 
@@ -160,8 +160,8 @@ You will be able to start your karaf server by launching `bin/karaf` command dir
 > ll target 
 total 144M
 drwxrwxr-x 9 assembly
--rw-rw-r-- 1 karaf-sandbox-ditribution-1.0.0.tar.gz
--rw-rw-r-- 1 karaf-sandbox-ditribution-1.0.0.zip
+-rw-rw-r-- 1 karaf-sandbox-distribution-1.0.0.tar.gz
+-rw-rw-r-- 1 karaf-sandbox-distribution-1.0.0.zip
 
 
 >./target/assembly/bin/karaf
