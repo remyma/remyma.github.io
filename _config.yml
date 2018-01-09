@@ -3,7 +3,7 @@ email: remy.matthieu@gmail.com
 description: >-
   Adventures in open-source software.
 baseurl: ""
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://matthieure.me" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: remyMatthieu
 github_username:  remyma
 linkedin_username: matthieu-remy-6794355
@@ -12,6 +12,7 @@ linkedin_username: matthieu-remy-6794355
 markdown: kramdown
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 date_format: "%F"
 
