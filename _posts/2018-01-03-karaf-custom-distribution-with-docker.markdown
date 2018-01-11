@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Dockerize your own karaf distribution"
+description: "Build your custom apache karaf distribution and runs it in docker container."
 date:   2018-01-03 12:05:11 +0100
 categories: karaf docker
 ---
