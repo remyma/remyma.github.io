@@ -43,8 +43,8 @@ Please follow the official documentation to install helm client and tiller serve
 In this article, I will assume that we install Tiller in a specific namespace with a tiller service account admin of this namespace :
 
 ```shell
-kubectl create namespace petclinic
-kubectl create serviceaccount tiller --namespace petclinic
+➜ kubectl create namespace petclinic
+➜ kubectl create serviceaccount tiller --namespace petclinic
 ```
 
 Then apply the following yaml (save it in a `role-tiller.yaml` file) to create tiller-role :
@@ -61,8 +61,15 @@ rules:
   verbs: ["*"]
 ```
 
+You should be `cluster-admin` to be allowed to apply this role.
+Here is the command to grant cluster-admin role to your user :
+
 ```shell
-oc apply -f role-tiller.yaml
+➜ kubectl create clusterrolebinding myname-cluster-admin-binding --clusterrole=cluster-admin --user=<my_user>
+```
+
+```shell
+➜ kubectl apply -f role-tiller.yaml
 ```
 
 And this yaml to assign freshly created `tiller-manager` role `petclinic` service account (save this to `rolebinding-tiller.yaml` file):
@@ -84,13 +91,13 @@ roleRef:
 ```
 
 ```shell
-oc apply -f rolebinding-tiller.yaml
+➜ kubectl apply -f rolebinding-tiller.yaml
 ```
 
 You are now ready to install tiller in `petclinic` namespace using `tiller` service account :
 
 ```shell
-helm init --service-account tiller --tiller-namespace petclinic
+➜ helm init --service-account tiller --tiller-namespace petclinic
 ```
 
 ## Create a Helm chart
@@ -109,7 +116,7 @@ The petclinic application we will deploy is composed of :
 Let's create our chart :
 
 ```shell
-helm create petclinic-chart
+➜ helm create petclinic-chart
 ```
 
 This command creates a `petclinic-chart` directory with the following structure :
@@ -131,5 +138,46 @@ We are ready to deploy this sample application.
 To do so :
 
 ```
-helm install petclinic-chart --tiller-namespace petclinic --namespace petclinic
+➜ helm install petclinic-chart --tiller-namespace petclinic --namespace petclinic
+```
+
+For now it's just the deployment of an nginx server.
+
+It's time to customize our chart to package petclinic application.
+
+## Chart requirements
+
+Fist our application will depend on a database.
+We will rely on an existing chart to package and deploy it.
+
+We can search the helm catalog or a stable mysql chart release :
+
+```shell
+➜ helm search | grep mysql                          
+...
+stable/mysql                         	0.10.2       	5.7.14                      	Fast, reliable, scalable, and easy to use open-...
+...
+```
+
+And use it as a requirement for our petclinic chart. Just create a `requirements.yaml` file with the following content in the root of your chart :
+
+```yaml
+dependencies:
+- name: mysql
+  version: 0.10.2
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  tags:
+    - petclinic-sdatabase
+```
+
+Then re-install :
+```
+➜ helm install petclinic-chart --tiller-namespace petclinic --namespace petclinic
+```
+
+You should see it deployed a mysql pod :
+```
+➜  kubectl get pods                                                
+NAME                                                  READY     STATUS             RESTARTS   AGE
+rafting-salamander-mysql-6c895959d4-n4kdl             1/1       Running            0          48m
 ```
