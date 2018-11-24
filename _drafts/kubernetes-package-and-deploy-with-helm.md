@@ -137,17 +137,22 @@ petclinic-chart/
 We are ready to deploy this sample application.
 To do so :
 
-```
+```shell
 ➜ helm install petclinic-chart --tiller-namespace petclinic --namespace petclinic
 ```
 
 For now it's just the deployment of an nginx server.
 
 It's time to customize our chart to package petclinic application.
+Let's remove all default template to start from scratch :
 
-## Chart requirements
+```shell
+➜ rm -rf petclinic-chart/templates/*.*
+```
 
-Fist our application will depend on a database.
+## Add mysql chart as chart requirement
+
+Petclinic application will depend on a mysql database.
 We will rely on an existing chart to package and deploy it.
 
 We can search the helm catalog or a stable mysql chart release :
@@ -177,7 +182,28 @@ Then re-install :
 
 You should see it deployed a mysql pod :
 ```
-➜  kubectl get pods                                                
+➜ kubectl get pods                                                
 NAME                                                  READY     STATUS             RESTARTS   AGE
 rafting-salamander-mysql-6c895959d4-n4kdl             1/1       Running            0          48m
 ```
+
+## Create 1 sub-chart per service
+
+Our microservice application is compouned of all these services : 
+* Discovery Server
+* Config Server
+* AngularJS frontend (API Gateway)
+* Customers, Vets and Visits Services
+* Tracing Server (Zipkin)
+* Admin Server (Spring Boot Admin)
+* Hystrix Dashboard for Circuit Breaker pattern
+
+Each service will need one or more yaml templates to be deployed. We could store all the services yaml template in the `templates/` directory of our chart.
+But it will be sustainable to split our chart into sub-chart : 1 per microservice.
+
+```shell
+➜ cd charts
+➜ helm create config-server 
+➜ rm -rf config-server/templates/*.*
+```
+
