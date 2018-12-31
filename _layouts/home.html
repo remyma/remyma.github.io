@@ -17,6 +17,9 @@ layout: default
                     {% for category in post.categories %}
                     <a href="#" class="tag"><span class="badge badge-secondary">#{{ category }}</span></a>
                     {% endfor %}
+                    {% for tag in post.tags %}
+                    <a href="{{ baseurl }}/tags#{{ tag | slugize }}" class="tag"><span class="badge badge-secondary">#{{ tag }}</span></a>
+                    {% endfor %}
                 </div>
 
                 {{ post.excerpt }}

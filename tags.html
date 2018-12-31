@@ -1,0 +1,24 @@
+---
+layout: default
+permalink: /tags/
+title: Tags
+---
+
+<div class="home">
+  
+    {% for tag in site.tags %}
+        <div class="row">
+            {% capture tag_name %}{{ tag | first }}{% endcapture %}
+            <article class="col post-summary" id="#{{ tag_name | slugize }}">
+                <h2>
+                    <a class="post-link" href="#{{ tag_name | slugize }}">{{ tag_name }}</a>
+                </h2>
+                <ul>
+                {% for post in site.tags[tag_name] %}
+                    <li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li>
+                {% endfor %}
+                </ul>
+            </article>
+        </div>
+    {% endfor %}
+</div>
