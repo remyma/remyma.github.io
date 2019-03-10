@@ -1,9 +1,28 @@
 ---
 layout: post
 title:  "ActiveMQ monitoring with TICK"
-tags: [monitoring, influxdata]
+tags: [monitoring, influxdata, activemq]
 excerpt: <p>ActiveMQ monitoring with TICK stack and Jolokia plugin.</p>
 ---
+
+Let's see how to monitor an ActiveQM Broker using InfluxData TICK stack.
+To know more about TICK stack, you can read [my first post][tick-overview] about it.
+
+## Prerequisite
+
+Run a TICK stack and an artemis broker.
+
+If you use docker, you can use this `docker-compose` example : 
+
+<script src="https://gist.github.com/remyma/83f8c2e360309414420373fba0613166.js"></script>
+
+Once you write this `docker-compose.yaml` file, just run it with following command :
+
+```shell
+docker-compose up -d
+```
+
+
 
 
 ## Telegraf Jolokia input plugin
@@ -35,3 +54,5 @@ you may consider using it instead as it may be less limited for the mectrics to 
 To enable this plugin, you have to declare it in `telegraf` configuration.
 Then you can get inspired by the documented examples from their github repository :
 [https://github.com/influxdata/telegraf/tree/master/plugins/inputs/jolokia2/examples](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/jolokia2/examples)
+
+[tick-overview]: http://matthieure.me/2019/03/09/influxdata-tick-overview.html
