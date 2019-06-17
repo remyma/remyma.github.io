@@ -8,8 +8,6 @@ twitter_username: remyMatthieu
 github_username:  remyma
 linkedin_username: matthieu-remy-6794355
 
-# Build settings
-markdown: kramdown
 plugins:
   - jekyll-feed
   - jekyll-sitemap
@@ -23,4 +21,3 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
-livereload: true
