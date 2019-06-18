@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kubernetes api"
+title:  "Kubernetes api resources"
 tags: [kubernetes]
 excerpt: <p>I hope you’ll find this post helpful, if like me, you were used to run `kubectl` commands without knowing that much about kubernetes API.</p>
 ---
@@ -24,13 +24,41 @@ Most common kubernetes objects are :
 
 All this objects are exposed as Api resources using kubernetes Api.
 
-Using `kubectl` client, you can manage Kubernetes Api resources, for example if you want to list pods :
+Using `kubectl` client, you can manage Kubernetes Api resources.
+
+For example if you want to list pods :
 
 ```shell
 ➜ kubectl get pods
 ```
 
-A kubernetes resource can be specified in yaml or json format. Here is a yaml which represents a `deployment` :
+An other example, if you want to create a deployment : 
+
+```shell
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-pod
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whatever
+    spec:
+      containers:
+        - name: shell
+          image: centos:7
+          command:
+            - sh
+            - '-c'
+            - echo "I will just print something here and then exit"
+EOF
+```
+
+As seen on this example, a kubernetes resource can be specified in `yaml` format (`json` is also supported). 
+A `yaml` resource is identified by a version and a kind :
 
 ```yaml
 apiVersion: apps/v1
@@ -41,12 +69,16 @@ spec:
   ...
 ```
 
-Every kubernetes object definition must contain these 2 fields : 
-* apiVersion - Which version of the Kubernetes API you’re using to create this object
-* kind - What kind of object you want to create
+* **apiVersion** - Which version of the Kubernetes API you’re using to create this object
+* **kind** - What kind of object you want to create
 
-But, which are the available resources supported on your kubernetes cluster ? 
+But, which are the available resources supported on your kubernetes cluster ?
+ 
 Also which api versions are supported ?
+
+What is the http request equivalent to the one your run using `kubectl` ?
+
+We'll cover this in the next sections.
 
 ## Api resources
 
@@ -92,15 +124,12 @@ What do we have here :
 * **NAME** : name of the resource collection
 * **SHORTNAMES** : a resource can have an abreviated name. 
 Example, if you want to list pvc, you can use this command `kubectl get pvc` instead of `kubectl get persistentvolumeclaims`
-* **APIGROUP** : resources can be grouped in api groups. Core resources such as `pods`, `nodes`, `namespaces` have no api group.
+* **APIGROUP** : resources that are logically related can be grouped in api groups. 
+Core resources such as `pods`, `nodes`, `namespaces` have no api group, because they belong to core group (also called "legacy group")
 * **NAMESPACED** : scope of the resource. If `true` resources are attached to a namespace. If `false`, resources are attached to the cluster.
 Example : a `node` is a cluster resource, it is not bound to a namespace. On the contrary `pod` is a namespace resource.
-* **KIND** : name of the resource
-* **VERBS** : all available actions
-
-On the previous output, you may notice that some resources (pods, services, nodes...) 
-have no matching group. These are core resources (pods, services, nodes, ...), they belong to core group
-(also called "legacy group").
+* **KIND** : object name that can be handled by the resource
+* **VERBS** : all available actions for the resource
 
 ## Api groups
 
@@ -143,15 +172,22 @@ storage.k8s.io/v1beta1
 v1
 ```
 
-As you can see in the ouput, Kubernetes supports multiple API versions. For example on the kubernetes cluster I am working on
-you can see that supported versions for batch api group are :
+As you can see in the ouput, Kubernetes supports multiple API versions.
+For example on the kubernetes cluster I am working on, you can see that supported versions for batch api group are :
 
 ```shell
 batch/v1
 batch/v1beta1
 ```
 
-These versions may evolve on cluster upgrades, so pay attention to it,
+There are 3 levels of supported versions, each version imply different levels of stability and support :
+* **Alpha**
+* **Beta**
+* **Stable**
+
+You can read the details for each version on the [official documentation][kubernetes-api-versioning] :
+
+These versions may evolve on cluster upgrades, so pay attention to it.
 otherwise you may end with these kind of error messages when creating a resource :
 
 ```shell
@@ -195,17 +231,94 @@ For example, if you want to get pods in the namespace `default` :
 curl http://localhost:8001/api/v1/namespaces/default/pods
 ```
 
-If you want to discover the api in details, there is an [openApi endpoint](https://kubernetes.io/docs/concepts/overview/kubernetes-api/#openapi-and-swagger-definitions) :
+If you want to discover the api in details, you can read the [API reference][kubernetes-api-reference].
+ 
+
+There is also an [openApi endpoint][kubernetes-openapi-definitions] :
 [http://127.0.0.1:8001/openapi/v2](http://127.0.0.1:8001/openapi/v2)
 
-Load this openApi spec with an api tool like postman or insomnia, and you'll be able to use it easily :
-
+Load this openApi spec with an api tool like postman or insomnia, and you'll be able to use the api without pain.
+Below, an example of the display using [Insomnia rest client][insomnia]
 ![Kubernetes openApi]({{ "/assets/images/posts/kubernetes-api/swagger.png" | absolute_url }})
+
+Here are the HTTP verbs used for kubernetes resources :
+
+| HTTP Verb | Kubectl equivalent  |
+| ---------------- |:------------| --------------:|
+| **HTTP GET**   | `kubectl get` |
+| **HTTP POST**   | `kubectl post` |
+| **HTTP PUT**      | `kubectl apply` |
+| **HTTP DELETE**      | `kubectl delete` |
+| **HTTP PATCH**      | `kubectl patch` |
+{: .table .table-striped .table-dark}
+
+Here are below 2 samples of http requests with the `kubectl` equivalent :
+
+### HTTP GET Example
+
+You can list pods for a specific namespace using this request :
+
+```shell
+curl http://localhost:8001/api/v1/namespaces/<THENAMESPACE>/pods
+```
+
+The `kubectl` equivalent :
+
+```shell
+kubectl -n <THENAMESPACE> get pods
+```
+
+### HTTP POST Example 
+
+To create a pod using a HTTP request :
+
+```shell
+curl --request POST \
+  --url http://localhost:8001/api/v1/namespaces/<THENAMESPACE>/pods \
+  --header 'content-type: application/json' \
+  --data '{
+    "apiVersion": "v1",
+    "kind": "Pod",
+    "metadata": {
+        "name": "nginx1"
+    },
+    "spec": {
+        "containers": [
+            {
+                "name": "nginx",
+                "image": "nginx:1.7.9",
+                "ports": [
+                    {
+                        "containerPort": 80
+                    }
+                ]
+            }
+        ]
+    }
+}'
+```
+
+The `kubectl` equivalent :
+
+```shell
+cat <<EOF | kubectl -n <THENAMESPACE> apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx1
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.7.9
+    ports:
+    - containerPort: 80
+EOF
+```
 
 ## Kubernetes api clients
 
 As we have seen, we can manage kubernetes objects either directly using http calls, or with `kubectl` command line.
-But there are also [official client librairies](https://kubernetes.io/docs/reference/using-api/client-libraries/)
+But there are also [official client librairies][kubernetes-client-librairies]{:target="_blank"}
 if you want to call kubernetes api with your favorite language.
 
 ## Conclusion
@@ -214,3 +327,9 @@ All Kubernetes resources are manageable through the Kubernetes Api. Resources ar
 and are versioned.
 Simplest way to make api calls is to use `kubectl` command line, but you can also query the api using raw http calls.
 If you want to call the api from your code, you can also use a client library for the language of your choice. 
+
+[insomnia]: https://insomnia.rest/
+[kubernetes-api-reference]: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.14/
+[kubernetes-api-versioning]: https://kubernetes.io/docs/concepts/overview/kubernetes-api/#api-versioning
+[kubernetes-client-librairies]: https://kubernetes.io/docs/reference/using-api/client-libraries/
+[kubernetes-openapi-definitions]: https://kubernetes.io/docs/concepts/overview/kubernetes-api/#openapi-and-swagger-definitions
