@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  "Deploy a java application with kubernetes"
-categories: kubernetes springboot
+categories: springboot
+tags: [kubernetes]
 excerpt: <p>Kubernetes is a game changer for application deployments. Let's introduce a few kubernetes concepts by deploying a Java demo application with it.</p>
 ---
 
